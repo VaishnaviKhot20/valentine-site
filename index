@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Forever Locked 💍</title>
+
+<style>
+body{
+  margin:0;
+  font-family:'Comic Sans MS',cursive;
+  background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.page{
+  display:none;
+  background:white;
+  padding:35px;
+  border-radius:30px;
+  text-align:center;
+  width:90%;
+  max-width:420px;
+  box-shadow:0 30px 60px rgba(0,0,0,.3);
+}
+.page.active{display:block}
+
+h1{color:#ff2f68}
+
+button{
+  padding:12px 28px;
+  font-size:16px;
+  border-radius:30px;
+  border:none;
+  margin:10px;
+  cursor:pointer;
+}
+.yes{background:#ff2f68;color:white}
+.no{background:#ddd;position:absolute}
+
+input{
+  padding:10px;
+  width:80%;
+  border-radius:12px;
+  border:1px solid #ccc;
+}
+
+/* hearts */
+.heart{
+  position:fixed;
+  font-size:22px;
+  animation:float 6s linear infinite;
+}
+@keyframes float{
+  from{transform:translateY(100vh);opacity:1}
+  to{transform:translateY(-10vh);opacity:0}
+}
+
+/* popup */
+.popup{
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#ff2f68;
+  color:white;
+  padding:14px 22px;
+  border-radius:25px;
+  animation:fade 3s forwards;
+}
+@keyframes fade{to{opacity:0}}
+
+/* celebration */
+#celebrate{
+  position:fixed;
+  inset:0;
+  background:rgba(255,192,203,.95);
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  z-index:10;
+}
+
+.glow{
+  font-size:30px;
+  color:#ff0055;
+  animation:glow 1.5s infinite alternate;
+}
+@keyframes glow{
+  from{text-shadow:0 0 10px #ff8fab}
+  to{text-shadow:0 0 30px #ff0055}
+}
+
+/* ring */
+.ring{
+  font-size:60px;
+  animation:spin 2s infinite linear;
+}
+@keyframes spin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+/* confetti */
+.confetti{
+  position:fixed;
+  width:10px;
+  height:10px;
+  animation:fall 3s linear infinite;
+}
+@keyframes fall{
+  from{transform:translateY(-100px) rotate(0)}
+  to{transform:translateY(100vh) rotate(360deg)}
+}
+
+/* certificate */
+#certificate{
+  margin-top:20px;
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 10px 20px rgba(0,0,0,.2);
+}
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c9a4e95c48.mp3">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page active" id="p1">
+<h1>Do you love ME? 💕</h1>
+<button class="yes" onclick="go(2)">Yes 😍</button>
+<button class="no" id="no1">No 😒</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="p2">
+<h1>My favorite name you call me? 😌</h1>
+<input id="nick" placeholder="Type here">
+<br><br>
+<button class="yes" onclick="check()">Submit 💌</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="p3">
+<h1>Do you give all Valentine week gifts? 🎁</h1>
+<button class="yes" id="yes3">Yes 😇</button>
+<button class="no" onclick="popup('Do it right now 😒😠')">No 😤</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="p4">
+<h1>Mr. Chetan Patil 💖<br>Will you be my forever Valentine?</h1>
+<button class="yes" onclick="finalYes()">Yes 😍</button>
+<button class="no" id="no4">No 😡</button>
+</div>
+
+<!-- FINAL -->
+<div id="celebrate">
+<div class="ring">💍</div>
+<h1 class="glow">CONGRATULATIONS 🎉</h1>
+<p>You are officially booked as</p>
+<h2 class="glow">Lifetime Valentine of THE PIYU KHOT 👻🙈</h2>
+
+<div id="certificate">
+<h3>💌 OFFICIALLY TAKEN 💌</h3>
+<p>This certifies that</p>
+<strong>Mr. Chetan Patil</strong>
+<p>belongs to</p>
+<strong>THE PIYU KHOT</strong>
+<p>Forever ♾️</p>
+</div>
+
+<button class="yes" onclick="whatsapp()">Share on WhatsApp 💚</button>
+</div>
+
+<script>
+function go(n){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+ document.getElementById('p'+n).classList.add('active')
+}
+
+function move(btn){
+ btn.style.left=Math.random()*(innerWidth-120)+'px'
+ btn.style.top=Math.random()*(innerHeight-60)+'px'
+}
+
+no1.onmouseover=()=>move(no1)
+yes3.onmouseover=()=>move(yes3)
+no4.onmouseover=()=>move(no4)
+
+function check(){
+ if(nick.value.toLowerCase()=="pidee") go(3)
+ else popup("Wrong 😒 Try again")
+}
+
+function popup(t){
+ let p=document.createElement('div')
+ p.className='popup'
+ p.innerText=t
+ document.body.appendChild(p)
+ setTimeout(()=>p.remove(),3000)
+}
+
+setInterval(()=>{
+ let h=document.createElement('div')
+ h.className='heart'
+ h.innerText='💖'
+ h.style.left=Math.random()*100+'vw'
+ document.body.appendChild(h)
+ setTimeout(()=>h.remove(),6000)
+},350)
+
+function finalYes(){
+ document.getElementById('celebrate').style.display='flex'
+ for(let i=0;i<160;i++){
+  let c=document.createElement('div')
+  c.className='confetti'
+  c.style.left=Math.random()*100+'vw'
+  c.style.background=`hsl(${Math.random()*360},100%,70%)`
+  document.body.appendChild(c)
+ }
+}
+
+function whatsapp(){
+ let msg=encodeURIComponent(
+ "🎉 I am officially booked as Lifetime Valentine of THE PIYU KHOT 👻🙈 💍💖"
+ )
+ window.open("https://wa.me/?text="+msg,"_blank")
+}
+
+window.onbeforeunload=()=> "Love is permanent 💘"
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Forever Locked 💍</title>
+
+<style>
+body{
+  margin:0;
+  font-family:'Comic Sans MS',cursive;
+  background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.page{
+  display:none;
+  background:white;
+  padding:35px;
+  border-radius:30px;
+  text-align:center;
+  width:90%;
+  max-width:420px;
+  box-shadow:0 30px 60px rgba(0,0,0,.3);
+}
+.page.active{display:block}
+
+h1{color:#ff2f68}
+
+button{
+  padding:12px 28px;
+  font-size:16px;
+  border-radius:30px;
+  border:none;
+  margin:10px;
+  cursor:pointer;
+}
+.yes{background:#ff2f68;color:white}
+.no{background:#ddd;position:absolute}
+
+input{
+  padding:10px;
+  width:80%;
+  border-radius:12px;
+  border:1px solid #ccc;
+}
+
+/* hearts */
+.heart{
+  position:fixed;
+  font-size:22px;
+  animation:float 6s linear infinite;
+}
+@keyframes float{
+  from{transform:translateY(100vh);opacity:1}
+  to{transform:translateY(-10vh);opacity:0}
+}
+
+/* popup */
+.popup{
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#ff2f68;
+  color:white;
+  padding:14px 22px;
+  border-radius:25px;
+  animation:fade 3s forwards;
+}
+@keyframes fade{to{opacity:0}}
+
+/* celebration */
+#celebrate{
+  position:fixed;
+  inset:0;
+  background:rgba(255,192,203,.95);
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  z-index:10;
+}
+
+.glow{
+  font-size:30px;
+  color:#ff0055;
+  animation:glow 1.5s infinite alternate;
+}
+@keyframes glow{
+  from{text-shadow:0 0 10px #ff8fab}
+  to{text-shadow:0 0 30px #ff0055}
+}
+
+/* ring */
+.ring{
+  font-size:60px;
+  animation:spin 2s infinite linear;
+}
+@keyframes spin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+/* confetti */
+.confetti{
+  position:fixed;
+  width:10px;
+  height:10px;
+  animation:fall 3s linear infinite;
+}
+@keyframes fall{
+  from{transform:translateY(-100px) rotate(0)}
+  to{transform:translateY(100vh) rotate(360deg)}
+}
+
+/* certificate */
+#certificate{
+  margin-top:20px;
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 10px 20px rgba(0,0,0,.2);
+}
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c9a4e95c48.mp3">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page active" id="p1">
+<h1>Do you love ME? 💕</h1>
+<button class="yes" onclick="go(2)">Yes 😍</button>
+<button class="no" id="no1">No 😒</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="p2">
+<h1>My favorite name you call me? 😌</h1>
+<input id="nick" placeholder="Type here">
+<br><br>
+<button class="yes" onclick="check()">Submit 💌</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="p3">
+<h1>Do you give all Valentine week gifts? 🎁</h1>
+<button class="yes" id="yes3">Yes 😇</button>
+<button class="no" onclick="popup('Do it right now 😒😠')">No 😤</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="p4">
+<h1>Mr. Chetan Patil 💖<br>Will you be my forever Valentine?</h1>
+<button class="yes" onclick="finalYes()">Yes 😍</button>
+<button class="no" id="no4">No 😡</button>
+</div>
+
+<!-- FINAL -->
+<div id="celebrate">
+<div class="ring">💍</div>
+<h1 class="glow">CONGRATULATIONS 🎉</h1>
+<p>You are officially booked as</p>
+<h2 class="glow">Lifetime Valentine of THE PIYU KHOT 👻🙈</h2>
+
+<div id="certificate">
+<h3>💌 OFFICIALLY TAKEN 💌</h3>
+<p>This certifies that</p>
+<strong>Mr. Chetan Patil</strong>
+<p>belongs to</p>
+<strong>THE PIYU KHOT</strong>
+<p>Forever ♾️</p>
+</div>
+
+<button class="yes" onclick="whatsapp()">Share on WhatsApp 💚</button>
+</div>
+
+<script>
+function go(n){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+ document.getElementById('p'+n).classList.add('active')
+}
+
+function move(btn){
+ btn.style.left=Math.random()*(innerWidth-120)+'px'
+ btn.style.top=Math.random()*(innerHeight-60)+'px'
+}
+
+no1.onmouseover=()=>move(no1)
+yes3.onmouseover=()=>move(yes3)
+no4.onmouseover=()=>move(no4)
+
+function check(){
+ if(nick.value.toLowerCase()=="pidee") go(3)
+ else popup("Wrong 😒 Try again")
+}
+
+function popup(t){
+ let p=document.createElement('div')
+ p.className='popup'
+ p.innerText=t
+ document.body.appendChild(p)
+ setTimeout(()=>p.remove(),3000)
+}
+
+setInterval(()=>{
+ let h=document.createElement('div')
+ h.className='heart'
+ h.innerText='💖'
+ h.style.left=Math.random()*100+'vw'
+ document.body.appendChild(h)
+ setTimeout(()=>h.remove(),6000)
+},350)
+
+function finalYes(){
+ document.getElementById('celebrate').style.display='flex'
+ for(let i=0;i<160;i++){
+  let c=document.createElement('div')
+  c.className='confetti'
+  c.style.left=Math.random()*100+'vw'
+  c.style.background=`hsl(${Math.random()*360},100%,70%)`
+  document.body.appendChild(c)
+ }
+}
+
+function whatsapp(){
+ let msg=encodeURIComponent(
+ "🎉 I am officially booked as Lifetime Valentine of THE PIYU KHOT 👻🙈 💍💖"
+ )
+ window.open("https://wa.me/?text="+msg,"_blank")
+}
+
+window.onbeforeunload=()=> "Love is permanent 💘"
+</script>
+
+</body>
+</html>
